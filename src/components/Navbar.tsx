@@ -1,51 +1,76 @@
-"use client";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+'use client';
+import { useState, useEffect } from "react";
 import { Home, TerminalIcon, Info } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { BorderBeam } from "@/components/ui/border-beam";
-import ShineBorder from "@/components/ui/shine-border";
 import { useTheme } from "next-themes";
 import HyperText from "./ui/hyper-text";
+import ShineBorder from "@/components/ui/shine-border";
 
 const Navbar = () => {
-  const [isActive, setisActive] = useState("/")
-  const [isOpen, setIsOpen] = useState(false);
   const { theme } = useTheme();
-  const navbarItems = [
-    {
-      name: "Home",
-      href: "/",
-      icon: Home,
-    },
-    {
-      name: "Projects",
-      href: "#projects",
-      icon: TerminalIcon,
-    },
-    {
-      name: "About",
-      href: "#about",
-      icon: Info,
-    },
-  ];
+  const [isVisible, setIsVisible] = useState(true);
+  const [activeSection, setActiveSection] = useState("home"); // Default to "home"
+  const [isOpen, setIsOpen] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Handle mobile menu toggle
+  const navbarItems = [
+    { name: "Home", href: "home", icon: Home },
+    { name: "Projects", href: "projects", icon: TerminalIcon },
+    { name: "About", href: "about", icon: Info },
+  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        // Scrolling down
+        setIsVisible(false);
+      } else {
+        // Scrolling up
+        setIsVisible(true);
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    // Add event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      let visibleSection = "home"; // Default to "home"
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleSection = entry.target.id;
+        }
+      });
+      setActiveSection(visibleSection); // Update active section
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.6, // Trigger when 60% of the section is visible
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe each section
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   return (
-    <nav className="p-4 lg:px-12  bg-background/50 sticky top-0 backdrop-blur-md border-b z-10">
+    <nav className={`p-4 lg:px-12 bg-background/50 sticky top-0 backdrop-blur-md border-b z-10 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="container mx-auto flex justify-between items-center transition-opacity">
+        {/* Logo */}
         <div className="text-black dark:text-white text-lg font-bold">
           <Link
             href="/"
@@ -59,34 +84,39 @@ const Navbar = () => {
           </Link>
         </div>
 
+        {/* Desktop Navigation */}
         <ShineBorder
           color={`${theme === "dark" ? "#fff" : "#000"}`}
           borderWidth={4}
-          className="hidden lg:flex gap-5 min-w-96 justify-center items-center  backdrop-blur-lg rounded-full p-2"
+          className="hidden lg:flex gap-5 min-w-96 justify-center items-center backdrop-blur-lg rounded-full p-2"
         >
           {navbarItems.map((item) => {
-            const tab=
-            isActive ===item.href
+            const isActive = activeSection === item.href;
             return (
               <Link
-                href={item.href} 
+                href={`#${item.href}`}
                 key={item.name}
-                onClick={() => setisActive(item.href)}
                 className={`
                   ${
                     theme === "dark"
-                      ? (tab
+                      ? isActive
                         ? "bg-white text-black"
-                        : "text-white bg-black")
-                      : (tab
+                        : "text-white bg-black"
+                      : isActive
                       ? "bg-black text-white"
-                      : "bg-white text-black")
+                      : "bg-white text-black"
                   }
-                 flex items-center justify-center gap-2 uppercase duration-200 ease-linear w-36 font-medium rounded-full p-2 text-center`}
+                  flex items-center justify-center gap-2 uppercase duration-200 ease-linear w-36 font-medium rounded-full p-2 text-center`}
               >
                 <item.icon
                   className={`${
-                    theme === "dark" ? tab ? "text-black" : "text-white" : tab ? "text-white" : "text-black"
+                    theme === "dark"
+                      ? isActive
+                        ? "text-black"
+                        : "text-white"
+                      : isActive
+                      ? "text-white"
+                      : "text-black"
                   }`}
                 />
                 {item.name}
@@ -95,56 +125,7 @@ const Navbar = () => {
           })}
         </ShineBorder>
 
-        <div className="lg:hidden flex items-center">
-          <button
-            onClick={toggleMenu}
-            className="p-2 rounded-full bg-white dark:bg-black text-black dark:text-white focus:outline-none"
-          >
-            {/* Hamburger Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {isOpen && (
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger />
-            <SheetContent>
-              <SheetHeader className={""}>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <SheetDescription>
-                {navbarItems.map((item) => {
-                  const tab=isActive ===item.href
-                  return (
-                    <Link
-                      href={item.href}
-                      key={item.name}
-                      className={`${
-                        tab && "bg-white text-black"
-                      } flex items-center gap-2 uppercase hover:bg-white duration-200 ease-linear w-full font-medium hover:text-black rounded-full p-2 text-center my-2`}
-                    >
-                      <item.icon /> {item.name}
-                    </Link>
-                  );
-                })}
-              </SheetDescription>
-            </SheetContent>
-          </Sheet>
-        )}
-
+        {/* Theme Toggle */}
         <div className="flex items-center gap-4">
           <ModeToggle />
         </div>

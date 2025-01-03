@@ -10,6 +10,9 @@ import Link from "next/link";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { RectangleEllipsis } from "lucide-react";
+import Blog from "@/components/Blog";
+import ContactForm from "@/components/Myform";
+import Footer from "@/components/Footer";
 export default function Home() {
   const { theme, setTheme } = useTheme();
 
@@ -53,7 +56,7 @@ export default function Home() {
       ) : (
         <RetroGrid className={"absolute inset-0 -z-10"} />
       )}
-      <section className="container px-4 py-10  mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
+      <section id="home" className="container px-4 py-10  mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
         <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
           <BoxReveal boxColor={"#121212"} duration={0.5}>
             <h1 className="text-3xl lg:text-6xl leading-snug font-bold  text-gray-800 dark:text-gray-200 md:text-4xl">
@@ -77,15 +80,24 @@ export default function Home() {
             ></form>
           </div>
         </div>
-        <div className="w-full mt-4 lg:mt-0 lg:w-1/2">
+        <div className="w-full  mt-4 lg:mt-0 lg:w-1/2">
           <Image
             src="/my_photo-1.jpg"
             width={500}
             height={300}
             alt="my-photo"
           />
+          
         </div>
       </section>
+      {/* <div>
+            <GoogleGeminiEffect pathLengths={[1,2,3,5,7]}
+            title="Build with Aceternity UI"
+            description="Aceternity UI is a modern UI toolkit for web makers based on the popular Tailwind CSS framework."
+            cta="Get Started"
+            ctaLink="https://www.creative-tim.com/learning-lab/tailwind/nextjs/overview/argon-dashboard?ref=aceternity-ui"
+            />
+          </div> */}
       <section className="lg:py-12     mt-10" id="projects">
         <div className="container lg:px-4 mx-auto ">
           <h2 className="text-4xl font-extrabold text-center pt-8 text-gray-800  dark:text-gray-200">
@@ -105,6 +117,7 @@ export default function Home() {
                   translateZ="60"
                   className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
                 >
+                  
                   Hover over this card to unleash the power of CSS perspective
                 </CardItem>
                 <CardItem translateZ="100" className="w-full mt-4">
@@ -229,7 +242,14 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+      </section>
+      <section>
+        <div className="min-h-screen flex items-center justify-center  ">
+        <ContactForm/>
+        </div>
+      </section>
+      <section>
+        <Footer/>
       </section>
     </main>
   );
