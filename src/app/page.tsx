@@ -16,39 +16,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   const { theme, setTheme } = useTheme();
 
-  const slugs = [
-    "typescript",
-    "javascript",
-    // "dart",
-    "java",
-    "react",
-    // "flutter",
-    "android",
-    "html5",
-    "css3",
-    "nodedotjs",
-    "express",
-    "nextdotjs",
-    "prisma",
-    "amazonaws",
-    "postgresql",
-    "firebase",
-    "nginx",
-    "vercel",
-    "testinglibrary",
-    "jest",
-    // "cypress",
-    "docker",
-    "git",
-    // "jira",
-    "github",
-    "gitlab",
-    "visualstudiocode",
-    "androidstudio",
-    "sonarqube",
-    "figma",
-  ];
-  // console.log(theme)
+  
   return (
     <main>
       {theme == "dark" ? (
@@ -80,12 +48,13 @@ export default function Home() {
             ></form>
           </div>
         </div>
-        <div className="w-full  mt-4 lg:mt-0 lg:w-1/2">
+        <div className="w-full   mt-4 lg:mt-0 lg:w-1/2">
           <Image
             src="/my_photo-1.jpg"
-            width={500}
+            width={500} 
             height={300}
             alt="my-photo"
+            className="rounded-[100%] "
           />
           
         </div>
@@ -130,21 +99,15 @@ export default function Home() {
                   />
                 </CardItem>
                 <div className="flex justify-between items-center mt-20">
+                  <div></div>
                   <CardItem
                     translateZ={20}
+                    // as={Button}
                     as={Link}
-                    href="https://twitter.com/mannupaaji"
-                    target="__blank"
-                    className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                  >
-                    Try now →
-                  </CardItem>
-                  <CardItem
-                    translateZ={20}
-                    as="button"
+                    href="https://music-studio-rjkw.onrender.com/"
                     className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
                   >
-                    Sign up
+                    Check out
                   </CardItem>
                 </div>
               </CardBody>
@@ -174,21 +137,14 @@ export default function Home() {
                   />
                 </CardItem>
                 <div className="flex justify-between items-center mt-20">
+                  <div></div>
                   <CardItem
                     translateZ={20}
                     as={Link}
-                    href="https://twitter.com/mannupaaji"
-                    target="__blank"
-                    className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                  >
-                    Try now →
-                  </CardItem>
-                  <CardItem
-                    translateZ={20}
-                    as="button"
+                    href="https://codetalks.vercel.app/"
                     className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
                   >
-                    Sign up
+                    Check out
                   </CardItem>
                 </div>
               </CardBody>
