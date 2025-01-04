@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import sendEmail from "@/lib/mailer.js";
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const { name, email, message } = await req?.json();
     console.log(name, email, message);
