@@ -1,12 +1,12 @@
 'use client'; // Ensure this component runs on the client side
-
+import { useToast } from "@/hooks/use-toast";
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea'; 
 import axios   from 'axios'
@@ -28,7 +28,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export function ContactForm() {
-  // Initialize the form using react-hook-form and zod validation
+  const {toast} = useToast();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
@@ -38,13 +38,22 @@ export function ContactForm() {
     console.log('Form submitted:', data);
     try {
       const response = await  axios.post('http://localhost:3000/api/contactme', data);
-        console.log(response.data);
+      toast({
+        title: "Email Sent successfully",
+        description: "Happy Learning 😊",
+      })
+      form.reset({ name: "", email: "", message: "" });
     } catch (error) {
         console.error("error occured ",error);
+        toast({
+          title: "Email Not Sent",
+          description: "Please try again later!",
+        })
     }
   };
 
   return (
+
     <div className="min-w-[300px] lg:min-w-[840px]  mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-center">Contact Me</h2>
       <Form {...form}>

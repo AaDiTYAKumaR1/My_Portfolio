@@ -6,13 +6,13 @@ const sendmail= async(email,data,subject) => {
         port: 465,
         secure: true, // Use `true` for port 465, `false` for all other ports
       auth: {
-        user: "aditysgoyal11@gmail.com",
-        pass: "vpsu wtnc ayhx kscf",
+        user: process.env.MY_EMAIL_ID, // generated ethereal user
+        pass: process.env.MY_PERSONAL_MAIL_TOKEN,
       }  
     });
     const recevier={
         from:email,
-        to:"aditysgoyal11@gmail.com",
+        to:MY_EMAIL_ID,
         subject: subject,
 
         html: `  <p style="font-size: 16px;">Hi ${data.name},</p>

@@ -1,22 +1,18 @@
 "use client";
 import Image from "next/image";
-import IconCloud from "@/components/ui/icon-cloud";
 import HomeIcon from "@/components/HomeIcon";
 import RetroGrid from "@/components/ui/retro-grid";
 import { useTheme } from "next-themes";
 import { BoxReveal } from "@/components/ui/box-reveal";
 import Particles from "@/components/ui/particles";
 import Link from "next/link";
-import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import { RectangleEllipsis } from "lucide-react";
-import Blog from "@/components/Blog";
 import ContactForm from "@/components/Myform";
 import Footer from "@/components/Footer";
 export default function Home() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
-  
+  // console.log(process.env.MY_PERSONAL_MAIL_TOKEN_)
   return (
     <main>
       {theme == "dark" ? (
@@ -27,15 +23,15 @@ export default function Home() {
       <section id="home" className="container px-4 py-10  mx-auto lg:h-128 lg:space-x-8 lg:flex lg:items-center">
         <div className="w-full text-center lg:text-left lg:w-1/2 lg:-mt-8">
           <BoxReveal boxColor={"#121212"} duration={0.5}>
-            <h1 className="text-3xl lg:text-6xl leading-snug font-bold  text-gray-800 dark:text-gray-200 md:text-4xl">
-              Hey I'am{" "}
+            <h1 className="text-3xl pr-3 lg:text-6xl leading-snug font-bold  text-gray-800 dark:text-gray-200 md:text-4xl">
+              Hey I am
               <span className="text-primary font-extrabold">Aditya</span>
             </h1>
           </BoxReveal>
 
           <BoxReveal boxColor={"#121212"} duration={0.5}>
             <h2 className="text-xl lg:text-6xl leading-snug font-bold  text-gray-800 dark:text-gray-200 md:text-2xl">
-              I'am Full Stack Web Developer
+              I am Full Stack Web Developer
             </h2>
           </BoxReveal>
           <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
@@ -207,6 +203,7 @@ export default function Home() {
       <section>
         <Footer/>
       </section>
+      
     </main>
   );
 }
