@@ -33,7 +33,7 @@ const sendmail= async(email,data,subject) => {
       };
         
     
-    auth.sendMail(recevier,( error,emailResponse) => {
+    auth.sendMail(recevier,( error) => {
         if(error)
         {
             throw error;

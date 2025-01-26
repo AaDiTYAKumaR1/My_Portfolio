@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState, useEffect } from "react";
 import { Home, TerminalIcon, Info, Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -55,7 +55,10 @@ const Navbar = () => {
       threshold: 0.6,
     };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
     const sections = document.querySelectorAll("section");
     sections.forEach((section) => observer.observe(section));
 
@@ -80,7 +83,9 @@ const Navbar = () => {
             href="/"
             className="uppercase text-3xl font-bold tracking-widest font-sans relative"
           >
-            <HyperText children={"Aditya"} className={"font-extrabold"} duration={2000} />
+            <HyperText className="font-extrabold" duration={2000}>
+              Aditya
+            </HyperText>
           </Link>
         </div>
 

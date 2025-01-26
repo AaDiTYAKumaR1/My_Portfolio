@@ -37,7 +37,7 @@ export function ContactForm() {
   const onSubmit =async (data: FormData) => {
     console.log('Form submitted:', data);
     try {
-      const response = await  axios.post('http://localhost:3000/api/contactme', data);
+        await  axios.post('http://localhost:3000/api/contactme', data);
       toast({
         title: "Email Sent successfully",
         description: "Happy Learning 😊",
